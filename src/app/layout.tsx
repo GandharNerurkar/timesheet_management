@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+
+import { SessionProvider } from "@/providers/session-provider";
+
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Ticktock Login",
-  description: "Secure sign in for the Ticktock timesheet platform.",
+  title: "Ticktock Timesheets",
+  description: "Timesheet management for modern teams.",
 };
 
 export default function RootLayout({
@@ -23,12 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full bg-white font-sans text-slate-900">
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

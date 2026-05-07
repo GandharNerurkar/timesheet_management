@@ -1,10 +1,13 @@
 "use client";
 
 import { useId } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoginErrorBanner } from "@/features/auth/components/login-error-banner";
 
 type LoginFormValues = {
   email: string;
@@ -16,10 +19,13 @@ export function LoginForm() {
   const emailId = useId();
   const passwordId = useId();
   const rememberId = useId();
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     defaultValues: {
@@ -29,8 +35,26 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = async (_values: LoginFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
+  const onSubmit = async (values: LoginFormValues) => {
+    clearErrors("root");
+
+    const response = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+      callbackUrl: "/dashboard",
+    });
+
+    if (response?.error) {
+      setError("root", {
+        type: "manual",
+        message: "Invalid email or password. Use admin@test.com / admin123.",
+      });
+      return;
+    }
+
+    router.push(response?.url ?? "/dashboard");
+    router.refresh();
   };
 
   return (
@@ -40,6 +64,8 @@ export function LoginForm() {
       noValidate
       aria-label="Sign in form"
     >
+      <LoginErrorBanner message={errors.root?.message} />
+
       <div className="space-y-2">
         <label
           htmlFor={emailId}
@@ -102,7 +128,7 @@ export function LoginForm() {
         </label>
       </div>
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "Signing in..." : "Sign in"}
       </Button>
     </form>
