@@ -8,6 +8,8 @@ import { Select } from "@/components/ui/select";
 import type { TimesheetSummary } from "@/types/timesheet";
 import { getStatusTone } from "@/utils/timesheet";
 
+type PageIndicator = number | "ellipsis";
+
 type TimesheetsTableProps = {
   timesheets: TimesheetSummary[];
 };
@@ -41,7 +43,21 @@ export function TimesheetsTable({ timesheets }: TimesheetsTableProps) {
     currentPage * rowsPerPage,
   );
 
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pageNumbers = useMemo<PageIndicator[]>(() => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    if (currentPage <= 4) {
+      return [1, 2, 3, 4, 5, "ellipsis", totalPages];
+    }
+
+    if (currentPage >= totalPages - 3) {
+      return [1, "ellipsis", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [1, "ellipsis", currentPage - 1, currentPage, currentPage + 1, "ellipsis", totalPages];
+  }, [currentPage, totalPages]);
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
@@ -185,29 +201,29 @@ export function TimesheetsTable({ timesheets }: TimesheetsTableProps) {
             >
               Previous
             </button>
-            {pageNumbers.slice(0, 8).map((pageNumber) => (
-              <button
-                key={pageNumber}
-                type="button"
-                onClick={() => setPage(pageNumber)}
-                className={`min-w-11 border-r border-slate-200 px-4 py-3 text-[1.05rem] transition ${
-                  currentPage === pageNumber
-                    ? "font-semibold text-blue-600"
-                    : "text-slate-600 hover:bg-slate-50"
-                }`}
-              >
-                {pageNumber}
-              </button>
-            ))}
-            <span className="border-r border-slate-200 px-4 py-3 text-[1.05rem] text-slate-600">
-              ...
-            </span>
-            <button
-              type="button"
-              className="border-r border-slate-200 px-4 py-3 text-[1.05rem] text-slate-600 transition hover:bg-slate-50"
-            >
-              99
-            </button>
+            {pageNumbers.map((pageNumber, index) =>
+              pageNumber === "ellipsis" ? (
+                <span
+                  key={`ellipsis-${index}`}
+                  className="border-r border-slate-200 px-4 py-3 text-[1.05rem] text-slate-600"
+                >
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={pageNumber}
+                  type="button"
+                  onClick={() => setPage(pageNumber)}
+                  className={`min-w-11 border-r border-slate-200 px-4 py-3 text-[1.05rem] transition ${
+                    currentPage === pageNumber
+                      ? "font-semibold text-blue-600"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  {pageNumber}
+                </button>
+              ),
+            )}
             <button
               type="button"
               className="px-4 py-3 text-[1.05rem] text-slate-600 transition hover:bg-slate-50 disabled:text-slate-300"

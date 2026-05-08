@@ -84,7 +84,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6"
+      className="fixed inset-0 z-50 grid h-screen place-items-center overflow-x-hidden overflow-y-auto px-4"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -97,7 +97,7 @@ export function Modal({
         aria-modal="true"
         aria-labelledby="modal-title"
         aria-describedby={description ? "modal-description" : undefined}
-        className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl sm:p-8"
+        className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl sm:p-8 max-h-[90vh] overflow-y-auto"
       >
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>

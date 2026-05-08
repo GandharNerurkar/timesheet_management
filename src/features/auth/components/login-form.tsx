@@ -131,6 +131,20 @@ export function LoginForm() {
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "Signing in..." : "Sign in"}
       </Button>
+
+      <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <p className="text-sm font-medium text-slate-700 mb-2">Demo Credentials:</p>
+        <div className="space-y-1 text-sm">
+          <p>
+            <span className="font-medium text-slate-600">Email:</span>{" "}
+            <span className="text-slate-900">admin@test.com</span>
+          </p>
+          <p>
+            <span className="font-medium text-slate-600">Password:</span>{" "}
+            <span className="text-slate-900">admin123</span>
+          </p>
+        </div>
+      </div>
     </form>
   );
 }
