@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Timesheet Management
+
+A modern, responsive timesheet management application built with Next.js 16, TypeScript, and Tailwind CSS. Manage employee work hours, projects, and tasks with an intuitive weekly view interface.
+
+## Features
+
+- **User Authentication**: Secure login/logout with NextAuth.js
+- **Weekly Timesheet View**: Visual weekly calendar with date containers
+- **Task Management**: Add, edit, and delete tasks with project assignment
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+- **Form Validation**: Robust form handling with React Hook Form and Zod
+- **Modal Interface**: Centered modals with blur background for task entry
+- **Pagination**: Efficient table pagination for large datasets
+- **Accessibility**: ARIA labels and keyboard navigation support
+
+## Tech Stack
+
+- **Framework**: Next.js 16.2.5 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **Forms**: React Hook Form + Zod validation
+- **Authentication**: NextAuth.js 4
+- **UI Components**: Custom component library
+- **State Management**: React hooks
+- **Data**: Mock data (easily replaceable with real API)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd timesheet_management
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. **Login**: Access the app and authenticate
+2. **Dashboard**: View all timesheets in a paginated table
+3. **Timesheet Details**: Click on a timesheet to view weekly breakdown
+4. **Add Tasks**: Use the "Add new task" button to create entries
+5. **Edit/Delete**: Modify or remove tasks via the action menu
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/                    # Next.js app router pages
+│   ├── api/               # API routes
+│   ├── dashboard/         # Dashboard page
+│   ├── login/             # Login page
+│   └── timesheet/[id]/    # Timesheet detail page
+├── components/            # Reusable UI components
+│   ├── forms/            # Form components
+│   ├── layout/           # Layout components
+│   ├── modal/            # Modal components
+│   ├── table/            # Table components
+│   ├── timesheet/        # Timesheet-specific components
+│   └── ui/               # Base UI components
+├── data/mock/             # Mock data files
+├── features/auth/         # Authentication features
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utility libraries
+├── providers/             # React context providers
+├── types/                 # TypeScript type definitions
+└── utils/                 # Helper functions
+```
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
