@@ -1,6 +1,6 @@
 export function getBaseUrl() {
   if (typeof window !== "undefined") {
-    return ""; // Browser should use relative path
+    return "";
   }
 
   if (process.env.NEXTAUTH_URL) {
