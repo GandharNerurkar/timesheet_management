@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getMockTimesheetSummaries } from "@/data/mock/timesheets";
+import { getMockTimesheetSummaries } from "@/__tests__/mocks/timesheets";
 
 export async function GET() {
   return NextResponse.json({

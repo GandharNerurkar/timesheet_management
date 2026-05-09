@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { getMockUserByCredentials } from "@/data/mock/users";
+import { getMockUserByCredentials } from "@/__tests__/mocks/users";
 
 export const authOptions: NextAuthOptions = {
   secret:
