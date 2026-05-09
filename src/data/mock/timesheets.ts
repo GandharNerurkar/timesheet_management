@@ -1,3 +1,4 @@
+import { getTimesheetStatus } from "@/utils/timesheet";
 import type {
   ProjectOption,
   TimesheetDayGroup,
@@ -102,7 +103,7 @@ const TIMESHEET_SUMMARIES: TimesheetSummary[] = [
     id: "dec-week-1",
     weekNumber: 1,
     dateRange: "Dec 1 - Dec 7, 2023",
-    status: "COMPLETED",
+    status: "INCOMPLETE",
     rangeKey: "December 2023",
   },
 ];
@@ -194,14 +195,14 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
     id: "jan-week-2",
     weekNumber: 2,
     weekRange: "Week 2 | Jan 8 - Jan 14, 2024",
-    totalHours: 32,
+    totalHours: 40,
     expectedHours: 40,
     days: mergeWeekDays("2024-01-08", {
       "2024-01-08": [
         createTask({
           id: "task-7",
           title: "Implement login validation",
-          hours: 6,
+          hours: 8,
           projectName: "Website Redesign",
           projectCode: "WR",
           workType: "Development",
@@ -211,7 +212,7 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
         createTask({
           id: "task-8",
           title: "Review dashboard spacing",
-          hours: 5,
+          hours: 7,
           projectName: "Mobile App",
           projectCode: "MA",
           workType: "Design",
@@ -251,7 +252,7 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
         createTask({
           id: "task-12",
           title: "Refactor table component",
-          hours: 6,
+          hours: 8,
           projectName: "Website Redesign",
           projectCode: "WR",
           workType: "Development",
@@ -261,7 +262,7 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
         createTask({
           id: "task-13",
           title: "Polish visual states",
-          hours: 6,
+          hours: 8,
           projectName: "Mobile App",
           projectCode: "MA",
           workType: "Design",
@@ -273,7 +274,7 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
     id: "jan-week-1",
     weekNumber: 1,
     weekRange: "Week 1 | Jan 1 - Jan 7, 2024",
-    totalHours: 38,
+    totalHours: 40,
     expectedHours: 40,
     days: mergeWeekDays("2024-01-01", {
       "2024-01-01": [
@@ -308,7 +309,7 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
         createTask({
           id: "task-16",
           title: "Build auth routes",
-          hours: 7,
+          hours: 5,
           projectName: "Website Redesign",
           projectCode: "WR",
           workType: "Development",
@@ -438,7 +439,18 @@ const WEEKLY_TIMESHEETS: WeeklyTimesheet[] = [
 ];
 
 export function getMockTimesheetSummaries() {
-  return TIMESHEET_SUMMARIES;
+  return TIMESHEET_SUMMARIES.map((summary) => {
+    const matchingTimesheet = WEEKLY_TIMESHEETS.find((timesheet) => timesheet.id === summary.id);
+
+    if (!matchingTimesheet) {
+      return summary;
+    }
+
+    return {
+      ...summary,
+      status: getTimesheetStatus(matchingTimesheet.totalHours),
+    };
+  });
 }
 
 export function getMockWeeklyTimesheetById(id: string) {

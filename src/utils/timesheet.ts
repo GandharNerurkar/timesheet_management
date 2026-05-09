@@ -34,6 +34,18 @@ export function getProgressPercentage(totalHours: number, expectedHours: number)
   return Math.min(100, Math.round((totalHours / expectedHours) * 100));
 }
 
+export function getTimesheetStatus(totalHours: number) {
+  if (totalHours <= 0) {
+    return "MISSING" as const;
+  }
+
+  if (totalHours >= 40) {
+    return "COMPLETED" as const;
+  }
+
+  return "INCOMPLETE" as const;
+}
+
 const MONTHS: Record<string, number> = {
   Jan: 0,
   Feb: 1,

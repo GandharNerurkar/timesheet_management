@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/app-shell";
 import { WeeklyTimesheetDetails } from "@/components/timesheet/weekly-timesheet-details";
 import { requireAuth } from "@/lib/auth";
-import { getTimesheetByIdFromApi } from "@/lib/api";
+import { getTimesheetById } from "@/services/timesheetService";
 
 export const metadata: Metadata = {
   title: "Timesheet Details | Ticktock",
@@ -23,7 +23,7 @@ export default async function TimesheetPage({ params }: TimesheetPageProps) {
   let response;
 
   try {
-    response = await getTimesheetByIdFromApi(id);
+    response = await getTimesheetById(id);
   } catch {
     notFound();
   }

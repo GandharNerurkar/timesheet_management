@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { AppShell } from "@/components/layout/app-shell";
 import { TimesheetsTable } from "@/components/table/timesheets-table";
 import { requireAuth } from "@/lib/auth";
-import { getTimesheetsFromApi } from "@/lib/api";
+import { getTimesheets } from "@/services/timesheetService";
 
 export const metadata: Metadata = {
   title: "Dashboard | Ticktock",
@@ -12,9 +12,7 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const session = await requireAuth();
-  const {
-    data: { timesheets },
-  } = await getTimesheetsFromApi();
+  const timesheets = await getTimesheets();
 
   return (
     <AppShell pathname="/dashboard" userName={session.user.name ?? "John Doe"}>
