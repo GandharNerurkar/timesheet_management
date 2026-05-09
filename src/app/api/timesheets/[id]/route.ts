@@ -4,7 +4,7 @@ import {
   getMockProjects,
   getMockWeeklyTimesheetById,
   getMockWorkTypes,
-} from "@/data/mock/timesheets";
+} from "@/__tests__/mocks/timesheets";
 
 type RouteContext = {
   params: Promise<{
